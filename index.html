@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Smart Water Monitoring System
+</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+
+
+<!-- REGISTER PAGE -->
+
+<div id="registerPage"
+class="login-container">
+
+<div class="login-box">
+
+<h1>
+💧 Water AI System
+</h1>
+
+<p>
+Smart Water Analysis & Monitoring
+</p>
+
+<input
+type="text"
+id="registerUsername"
+placeholder="Create Username"
+class="input-box">
+
+<input
+type="password"
+id="registerPassword"
+placeholder="Create Password"
+class="input-box">
+
+<button
+onclick="registerUser()"
+class="login-btn">
+
+Register
+
+</button>
+
+<p class="switch-text">
+
+Already Registered?
+
+<span onclick="showLogin()">
+Login
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage"
+class="login-container"
+style="display:none;">
+
+<div class="login-box">
+
+<h1>
+💧 Water AI
+</h1>
+
+<p>
+Login To Continue
+</p>
+
+<input
+type="text"
+id="loginUsername"
+placeholder="Username"
+class="input-box">
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Password"
+class="input-box">
+
+<button
+onclick="loginStudent()"
+class="login-btn">
+
+Student Login
+
+</button>
+
+<button
+onclick="loginWarden()"
+class="login-btn admin-btn">
+
+Warden Login
+
+</button>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- MAIN SYSTEM -->
+
+<div id="mainSystem"
+style="display:none;">
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>
+💧 Water AI
+</h2>
+
+<ul id="menuList"></ul>
+
+</div>
+
+
+
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboardPage"
+class="page">
+
+<div class="topbar">
+
+<h1>
+Smart Water Monitoring
+</h1>
+
+<div class="status">
+
+● System Online
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card">
+
+<h3>pH Level</h3>
+
+<p id="ph">7.2</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Temperature</h3>
+
+<p id="temp">28°C</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Turbidity</h3>
+
+<p id="turbidity">3 NTU</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Water Usage</h3>
+
+<p id="usage">420 L</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Leakage Risk</h3>
+
+<p id="leakage">Low</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>AI Prediction</h3>
+
+<p id="prediction">450 L</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Tank Level</h3>
+
+<p id="tankLevel">80%</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Motor Status</h3>
+
+<p id="motorStatus">ON</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Water Quality</h3>
+
+<p id="qualityStatus">SAFE</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>AI Alert</h3>
+
+<p id="aiAlert">Normal</p>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- CHARTS -->
+
+<div class="graph-section">
+
+<div class="chart-box">
+
+<canvas id="waterChart"></canvas>
+
+</div>
+
+<div class="chart-box">
+
+<canvas id="usageChart"></canvas>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- NOTIFICATION PANEL -->
+
+<div class="notification-panel">
+
+<h2>
+🔔 Live Notifications
+</h2>
+
+<div id="notificationList">
+
+<div class="notification">
+✅ Water Supply Stable
+</div>
+
+<div class="notification">
+⚠ Room 304 High Usage Detected
+</div>
+
+<div class="notification">
+💧 Tank Refilling Active
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- HOSTEL PAGE -->
+
+<div id="hostelPage"
+class="page"
+style="display:none;">
+
+<h1>
+🏢 Hostel Water Monitoring
+</h1>
+
+<h2 class="floor-title">
+Ground Floor
+</h2>
+
+<div class="room-grid"
+id="groundFloor"></div>
+
+<h2 class="floor-title">
+Floor 1
+</h2>
+
+<div class="room-grid"
+id="floor1"></div>
+
+<h2 class="floor-title">
+Floor 2
+</h2>
+
+<div class="room-grid"
+id="floor2"></div>
+
+<h2 class="floor-title">
+Floor 3
+</h2>
+
+<div class="room-grid"
+id="floor3"></div>
+
+<h2 class="floor-title">
+Floor 4
+</h2>
+
+<div class="room-grid"
+id="floor4"></div>
+
+<h2 class="floor-title">
+Floor 5
+</h2>
+
+<div class="room-grid"
+id="floor5"></div>
+
+</div>
+
+
+
+
+
+<!-- REPORT PAGE -->
+
+<div id="reportsPage"
+class="page"
+style="display:none;">
+
+<h1>
+🚨 Report Water Issue
+</h1>
+
+<div class="report-box">
+
+<input
+type="text"
+id="roomNumber"
+placeholder="Room Number"
+class="input-box">
+
+<select
+id="issueType"
+class="input-box">
+
+<option>
+No Water
+</option>
+
+<option>
+Leakage
+</option>
+
+<option>
+Dirty Water
+</option>
+
+<option>
+Low Pressure
+</option>
+
+<option>
+Pipe Damage
+</option>
+
+</select>
+
+<textarea
+id="issueText"
+placeholder="Describe Problem..."></textarea>
+
+<button
+onclick="submitIssue()"
+class="login-btn">
+
+Submit Report
+
+</button>
+
+</div>
+
+<div id="reportList"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

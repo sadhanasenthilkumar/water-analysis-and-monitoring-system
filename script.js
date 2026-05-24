@@ -1,636 +1,477 @@
-// SHOW LOGIN
+// SHOW LOGIN PAGE
 
-function showLogin(){
+function showLogin() {
 
-document.getElementById(
-"registerPage"
-).style.display="none";
+    document.getElementById(
+        "registerPage"
+    ).style.display = "none";
 
-document.getElementById(
-"loginPage"
-).style.display="flex";
-
+    document.getElementById(
+        "loginPage"
+    ).style.display = "flex";
 }
 
 
 
-// REGISTER
 
-function registerUser(){
 
-let username=
-document.getElementById(
-"registerUsername"
-).value;
+// REGISTER USER
 
-let password=
-document.getElementById(
-"registerPassword"
-).value;
+function registerUser() {
 
-if(username==="" || password===""){
+    let username =
+    document.getElementById(
+        "registerUsername"
+    ).value;
 
-alert("Fill all fields");
+    let password =
+    document.getElementById(
+        "registerPassword"
+    ).value;
 
-return;
+    if(username === "" || password === "") {
+
+        alert("Please fill all fields");
+
+        return;
+    }
+
+    alert("Registration Successful");
+
+    showLogin();
 }
 
-localStorage.setItem(
-"waterUser",
-username
-);
 
-localStorage.setItem(
-"waterPass",
-password
-);
-
-alert("Registration Successful");
-
-showLogin();
-
-}
 
 
 
 // STUDENT LOGIN
 
-function loginStudent(){
+function loginStudent() {
 
-let username=
-document.getElementById(
-"loginUsername"
-).value;
+    let username =
+    document.getElementById(
+        "loginUsername"
+    ).value;
 
-let password=
-document.getElementById(
-"loginPassword"
-).value;
+    let password =
+    document.getElementById(
+        "loginPassword"
+    ).value;
 
-let savedUser=
-localStorage.getItem(
-"waterUser"
-);
+    if(username === "" || password === "") {
 
-let savedPass=
-localStorage.getItem(
-"waterPass"
-);
+        alert("Enter Username & Password");
 
-if(username===savedUser &&
-password===savedPass){
+        return;
+    }
 
-document.getElementById(
-"loginPage"
-).style.display="none";
+    document.getElementById(
+        "loginPage"
+    ).style.display = "none";
 
-document.getElementById(
-"mainSystem"
-).style.display="block";
+    document.getElementById(
+        "mainSystem"
+    ).style.display = "flex";
 
-document.getElementById(
-"menuList"
-).innerHTML=`
+    loadMenu();
 
-<li onclick="showPage('dashboard')">
-📊 Dashboard
-</li>
+    createRooms();
 
-<li onclick="showPage('reports')">
-🚨 Report Issue
-</li>
+    startLiveData();
 
-`;
-
-}else{
-
-alert("Wrong Login");
+    createCharts();
 }
-}
+
+
 
 
 
 // WARDEN LOGIN
 
-function loginWarden(){
+function loginWarden() {
 
-let pass=
-prompt(
-"Enter Warden Password"
-);
+    let username =
+    document.getElementById(
+        "loginUsername"
+    ).value;
 
-if(pass==="warden123"){
+    let password =
+    document.getElementById(
+        "loginPassword"
+    ).value;
 
-document.getElementById(
-"loginPage"
-).style.display="none";
+    if(username === "" || password === "") {
 
-document.getElementById(
-"mainSystem"
-).style.display="block";
+        alert("Enter Username & Password");
 
-document.getElementById(
-"menuList"
-).innerHTML=`
+        return;
+    }
 
-<li onclick="showPage('dashboard')">
-📊 Dashboard
-</li>
+    document.getElementById(
+        "loginPage"
+    ).style.display = "none";
 
-<li onclick="showPage('hostel')">
-🏢 Hostel Monitoring
-</li>
+    document.getElementById(
+        "mainSystem"
+    ).style.display = "flex";
 
-<li onclick="showPage('reports')">
-🚨 Student Reports
-</li>
+    loadMenu();
 
-`;
+    createRooms();
 
-}else{
+    startLiveData();
 
-alert("Wrong Password");
-}
+    createCharts();
 }
 
 
 
-// PAGE NAVIGATION
 
-function showPage(page){
 
-document.getElementById(
-"dashboardPage"
-).style.display="none";
+// MENU ITEMS
 
-document.getElementById(
-"hostelPage"
-).style.display="none";
+function loadMenu() {
 
-document.getElementById(
-"reportsPage"
-).style.display="none";
+    let menu = document.getElementById(
+        "menuList"
+    );
 
-if(page==="dashboard"){
+    menu.innerHTML = `
 
-document.getElementById(
-"dashboardPage"
-).style.display="block";
-}
+    <li onclick="showPage('dashboardPage')">
+    📊 Dashboard
+    </li>
 
-if(page==="hostel"){
+    <li onclick="showPage('hostelPage')">
+    🏢 Hostel Monitoring
+    </li>
 
-document.getElementById(
-"hostelPage"
-).style.display="block";
-}
+    <li onclick="showPage('reportsPage')">
+    🚨 Reports
+    </li>
 
-if(page==="reports"){
-
-document.getElementById(
-"reportsPage"
-).style.display="block";
-}
+    `;
 }
 
 
 
-// REPORT ISSUE
 
-function submitIssue(){
 
-let room=
-document.getElementById(
-"roomNumber"
-).value;
+// SHOW PAGES
 
-let issue=
-document.getElementById(
-"issueText"
-).value;
+function showPage(pageId) {
 
-let type=
-document.getElementById(
-"issueType"
-).value;
+    let pages =
+    document.querySelectorAll(".page");
 
-if(room==="" || issue===""){
+    pages.forEach(function(page) {
 
-alert("Fill all details");
+        page.style.display = "none";
 
-return;
-}
+    });
 
-let div=
-document.createElement("div");
-
-div.className="room-card";
-
-div.innerHTML=`
-
-<h3>
-🚨 Room ${room}
-</h3>
-
-<p>
-Issue Type:
-${type}
-</p>
-
-<p>
-${issue}
-</p>
-
-`;
-
-document.getElementById(
-"reportList"
-).appendChild(div);
-
-alert("Emergency Report Sent");
-
-document.getElementById(
-"roomNumber"
-).value="";
-
-document.getElementById(
-"issueText"
-).value="";
+    document.getElementById(
+        pageId
+    ).style.display = "block";
 }
 
 
 
-// WATER CHART
-
-const waterCtx=
-document.getElementById(
-'waterChart'
-);
-
-new Chart(waterCtx,{
-
-type:'line',
-
-data:{
-
-labels:[
-'Mon',
-'Tue',
-'Wed',
-'Thu',
-'Fri',
-'Sat',
-'Sun'
-],
-
-datasets:[{
-
-label:'Water Quality',
-
-data:[
-7,
-7.2,
-6.9,
-7.5,
-7.1,
-7.3,
-7
-],
-
-borderColor:'#22d3ee',
-
-borderWidth:3,
-
-tension:0.4
-}]
-}
-});
 
 
+// CREATE HOSTEL ROOMS
 
-// USAGE CHART
+function createRooms() {
 
-const usageCtx=
-document.getElementById(
-'usageChart'
-);
+    createFloor(
+        "groundFloor",
+        1,
+        10
+    );
 
-new Chart(usageCtx,{
+    createFloor(
+        "floor1",
+        101,
+        110
+    );
 
-type:'bar',
+    createFloor(
+        "floor2",
+        201,
+        210
+    );
 
-data:{
+    createFloor(
+        "floor3",
+        301,
+        310
+    );
 
-labels:[
-'Mon',
-'Tue',
-'Wed',
-'Thu',
-'Fri',
-'Sat',
-'Sun'
-],
+    createFloor(
+        "floor4",
+        401,
+        410
+    );
 
-datasets:[{
-
-label:'Water Usage',
-
-data:[
-300,
-400,
-350,
-500,
-450,
-420,
-390
-],
-
-backgroundColor:'#38bdf8'
-}]
-}
-});
-
-
-
-// LIVE DATA
-
-function updateData(){
-
-let ph=
-(6+Math.random()*3)
-.toFixed(1);
-
-let temp=
-Math.floor(
-25+Math.random()*10
-);
-
-let turbidity=
-Math.floor(
-1+Math.random()*10
-);
-
-let usage=
-Math.floor(
-300+Math.random()*400
-);
-
-let prediction=
-Math.floor(
-350+Math.random()*300
-);
-
-let tank=
-Math.floor(
-40+Math.random()*60
-);
-
-document.getElementById(
-"ph"
-).innerHTML=ph;
-
-document.getElementById(
-"temp"
-).innerHTML=temp+"°C";
-
-document.getElementById(
-"turbidity"
-).innerHTML=turbidity+" NTU";
-
-document.getElementById(
-"usage"
-).innerHTML=usage+" L";
-
-document.getElementById(
-"prediction"
-).innerHTML=prediction+" L";
-
-document.getElementById(
-"tankLevel"
-).innerHTML=tank+"%";
-
-
-
-// LEAKAGE
-
-if(usage>550){
-
-document.getElementById(
-"leakage"
-).innerHTML="High";
-
-document.getElementById(
-"aiAlert"
-).innerHTML=
-"Leakage Suspected";
-
-}else{
-
-document.getElementById(
-"leakage"
-).innerHTML="Low";
-
-document.getElementById(
-"aiAlert"
-).innerHTML=
-"Normal";
+    createFloor(
+        "floor5",
+        501,
+        510
+    );
 }
 
 
 
-// MOTOR STATUS
 
-if(tank<50){
 
-document.getElementById(
-"motorStatus"
-).innerHTML="ON";
+// CREATE FLOOR DATA
 
-}else{
+function createFloor(id, start, end) {
 
-document.getElementById(
-"motorStatus"
-).innerHTML="OFF";
+    let container =
+    document.getElementById(id);
+
+    container.innerHTML = "";
+
+    for(let i = start; i <= end; i++) {
+
+        let usage =
+        Math.floor(
+            Math.random() * 500
+        );
+
+        let status =
+        usage > 400
+        ? "High"
+        : "Normal";
+
+        container.innerHTML += `
+
+        <div class="room-card">
+
+        <h3>
+        Room ${i}
+        </h3>
+
+        <p>
+        Usage: ${usage} L
+        </p>
+
+        <p>
+        Status: ${status}
+        </p>
+
+        </div>
+
+        `;
+    }
 }
 
 
 
-// WATER QUALITY
-
-if(ph<6.5 || ph>8.5){
-
-document.getElementById(
-"qualityStatus"
-).innerHTML="UNSAFE";
-
-}else{
-
-document.getElementById(
-"qualityStatus"
-).innerHTML="SAFE";
-}
-
-}
-
-setInterval(updateData,3000);
 
 
+// LIVE DATA UPDATE
 
-// HOSTEL ROOM GENERATOR
+function startLiveData() {
 
-function generateFloor(
-floorId,
-startRoom
-){
+    setInterval(function() {
 
-const floor=
-document.getElementById(
-floorId
-);
+        document.getElementById(
+            "ph"
+        ).innerText =
+        (6 + Math.random() * 2)
+        .toFixed(1);
 
-floor.innerHTML="";
+        document.getElementById(
+            "temp"
+        ).innerText =
+        Math.floor(
+            25 + Math.random() * 10
+        ) + "°C";
 
-for(let i=0;i<20;i++){
+        document.getElementById(
+            "turbidity"
+        ).innerText =
+        Math.floor(
+            1 + Math.random() * 5
+        ) + " NTU";
 
-let roomNo=
-startRoom+i;
+        document.getElementById(
+            "usage"
+        ).innerText =
+        Math.floor(
+            300 + Math.random() * 300
+        ) + " L";
 
-let usage=
-Math.floor(
-80+Math.random()*700
-);
+        document.getElementById(
+            "prediction"
+        ).innerText =
+        Math.floor(
+            400 + Math.random() * 200
+        ) + " L";
 
-let ph=
-(6+Math.random()*3)
-.toFixed(1);
+        document.getElementById(
+            "tankLevel"
+        ).innerText =
+        Math.floor(
+            50 + Math.random() * 50
+        ) + "%";
 
-let status=
-"Normal";
-
-let statusClass=
-"normal-status";
-
-if(usage>500){
-
-status="High Usage";
-
-statusClass=
-"high-status";
-}
-
-if(usage>650){
-
-status=
-"Leakage Suspected";
-
-statusClass=
-"leakage-status";
-}
-
-let room=
-document.createElement("div");
-
-room.className=
-"room-card";
-
-room.innerHTML=`
-
-<h3>
-Room ${roomNo}
-</h3>
-
-<p>
-Usage:
-${usage} L
-</p>
-
-<p>
-pH Level:
-${ph}
-</p>
-
-<span class="
-room-status
-${statusClass}
-">
-
-${status}
-
-</span>
-`;
-
-floor.appendChild(room);
-}
+    }, 3000);
 }
 
 
 
-// GENERATE FLOORS
-
-generateFloor(
-"groundFloor",
-1
-);
-
-generateFloor(
-"floor1",
-101
-);
-
-generateFloor(
-"floor2",
-201
-);
-
-generateFloor(
-"floor3",
-301
-);
-
-generateFloor(
-"floor4",
-401
-);
-
-generateFloor(
-"floor5",
-501
-);
 
 
+// REPORT SUBMISSION
 
-// AUTO UPDATE FLOORS
+function submitIssue() {
 
-setInterval(()=>{
+    let room =
+    document.getElementById(
+        "roomNumber"
+    ).value;
 
-generateFloor(
-"groundFloor",
-1
-);
+    let issue =
+    document.getElementById(
+        "issueType"
+    ).value;
 
-generateFloor(
-"floor1",
-101
-);
+    let text =
+    document.getElementById(
+        "issueText"
+    ).value;
 
-generateFloor(
-"floor2",
-201
-);
+    if(room === "" || text === "") {
 
-generateFloor(
-"floor3",
-301
-);
+        alert("Fill all details");
 
-generateFloor(
-"floor4",
-401
-);
+        return;
+    }
 
-generateFloor(
-"floor5",
-501
-);
+    let reportList =
+    document.getElementById(
+        "reportList"
+    );
 
-},5000);
+    reportList.innerHTML += `
+
+    <div class="notification">
+
+    🚨 Room ${room}
+    - ${issue}
+
+    <br><br>
+
+    ${text}
+
+    </div>
+
+    `;
+
+    alert("Issue Submitted");
+
+    document.getElementById(
+        "roomNumber"
+    ).value = "";
+
+    document.getElementById(
+        "issueText"
+    ).value = "";
+}
+
+
+
+
+
+// CHARTS
+
+function createCharts() {
+
+    let ctx1 =
+    document.getElementById(
+        "waterChart"
+    ).getContext("2d");
+
+    new Chart(ctx1, {
+
+        type: "line",
+
+        data: {
+
+            labels: [
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri",
+                "Sat"
+            ],
+
+            datasets: [{
+
+                label:
+                "Water Quality",
+
+                data: [
+                    7.1,
+                    7.4,
+                    7.0,
+                    7.3,
+                    7.5,
+                    7.2
+                ],
+
+                borderWidth: 3
+
+            }]
+        }
+    });
+
+
+
+
+
+    let ctx2 =
+    document.getElementById(
+        "usageChart"
+    ).getContext("2d");
+
+    new Chart(ctx2, {
+
+        type: "bar",
+
+        data: {
+
+            labels: [
+                "GF",
+                "F1",
+                "F2",
+                "F3",
+                "F4",
+                "F5"
+            ],
+
+            datasets: [{
+
+                label:
+                "Water Usage",
+
+                data: [
+                    500,
+                    700,
+                    650,
+                    800,
+                    750,
+                    600
+                ],
+
+                borderWidth: 2
+
+            }]
+        }
+    });
+}
